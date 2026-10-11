@@ -18,7 +18,7 @@
   --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* {
+*, *:before, *:after {
   box-sizing: border-box;
 }
 
@@ -33,6 +33,7 @@ body {
   font-family: Georgia, 'Times New Roman', serif;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* Luxurious Vignette & Textured Background */
@@ -1222,6 +1223,7 @@ footer p {
 }
 
 .envelope-container.open .envelope-letter {
-  transform: translateY(-135px);
+  transform: translateY(-145px) scale(1.02);
   z-index: 5;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }

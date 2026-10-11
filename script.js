@@ -3,17 +3,34 @@ const weddingDate = new Date('2027-01-14T15:00:00+08:00');
 function updateCountdown() {
   const now = new Date();
   let diff = Math.max(0, weddingDate - now);
+
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+
+  // If the wedding day has arrived or passed
+  if (diff === 0) {
+    const countdownContainer = document.querySelector('.countdown');
+    if (countdownContainer) {
+      countdownContainer.style.gridTemplateColumns = '1fr';
+      countdownContainer.innerHTML = `
+        <div style="padding: 32px; text-align: center; background: rgba(255, 254, 251, 0.95);">
+          <strong style="font-size: 1.6rem; color: var(--wine); font-weight: 400; font-family: Georgia, serif;">Today is the Big Day! 🥂</strong>
+          <p style="margin: 8px 0 20px; color: var(--ink-muted); font-size: 0.95rem;">Welcome to Lex & Angelica's wedding day.</p>
+          <a class="button" href="https://www.google.com/maps/search/?api=1&query=Maharlika+Events+Tagaytay" target="_blank" rel="noopener" style="margin-top: 0;">Navigate to Venue</a>
+        </div>
+      `;
+    }
+    return;
+  }
+
   const d = Math.floor(diff / 86400000);
   diff %= 86400000;
   const h = Math.floor(diff / 3600000);
   diff %= 3600000;
   const m = Math.floor(diff / 60000);
   const s = Math.floor((diff % 60000) / 1000);
-  
-  const daysEl = document.getElementById('days');
-  const hoursEl = document.getElementById('hours');
-  const minutesEl = document.getElementById('minutes');
-  const secondsEl = document.getElementById('seconds');
 
   if (daysEl) daysEl.textContent = d;
   if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
@@ -51,7 +68,6 @@ if (particleContainer) {
   }
 }
 
-const enterBtn = document.getElementById('enter-btn');
 const overlay = document.getElementById('audio-overlay');
 const bgMusic = document.getElementById('bg-music');
 const waxSeal = document.querySelector('.wax-seal');
@@ -70,13 +86,6 @@ if (overlay && bgMusic) {
       setTimeout(() => overlay.remove(), 900);
     }, 1100);
   };
-
-  if (enterBtn) {
-    enterBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      handleOpen();
-    });
-  }
 
   if (waxSeal) {
     waxSeal.addEventListener('click', (e) => {
